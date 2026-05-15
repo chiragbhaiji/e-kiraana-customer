@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { getProducts } from "../apis/getProducts";
 
 type HomeSearchProps = {
   filters?: Array<string>;
@@ -19,14 +20,7 @@ const useHomeSearch = ({
   useEffect(() => {
     // Simulate fetching and filtering data based on searchQuery
     const fetchData = async () => {
-      // Replace with actual data fetching logic
-      const allItems = [
-        { id: "1", name: "Item 1" },
-        { id: "2", name: "Item 2" },
-        { id: "3", name: "Shop A" },
-        { id: "4", name: "Shop B" },
-      ];
-
+      const allItems = await getProducts();
       const filtered = allItems.filter((item) =>
         item.name.toLowerCase().includes(searchQuery.toLowerCase()),
       );

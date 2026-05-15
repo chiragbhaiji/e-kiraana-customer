@@ -8,17 +8,23 @@ import { ShopItem } from "./types";
 export default function HomeScreen() {
   const { searchQuery, setSearchQuery, filteredItems } = useHomeSearch({});
 
+  const keyExtractor = (item: ShopItem) => item.id;
+
+  const itemSeparator = () => <View style={styles.separator} />;
+
   const renderItem = ({ item }: { item: ShopItem }) => (
     <ShopCardItem item={item} />
   );
 
   return (
     <FlatList
-      contentContainerStyle={styles.container}
       data={filteredItems}
+      numColumns={2}
       renderItem={renderItem}
-      keyExtractor={(item) => item.id}
-      ItemSeparatorComponent={() => <View style={styles.separator} />}
+      contentContainerStyle={styles.container}
+      columnWrapperStyle={styles.columnWrapper}
+      keyExtractor={keyExtractor}
+      ItemSeparatorComponent={itemSeparator}
       ListHeaderComponent={
         <SearchBar value={searchQuery} onChangeText={setSearchQuery} />
       }
@@ -28,7 +34,6 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     padding: 16,
     backgroundColor: MyTheme.colors.background,
   },
@@ -38,5 +43,8 @@ const styles = StyleSheet.create({
   title: {
     color: MyTheme.colors.text,
     fontSize: 20,
+  },
+  columnWrapper: {
+    justifyContent: "space-between",
   },
 });

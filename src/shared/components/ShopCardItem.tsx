@@ -1,5 +1,5 @@
+import { ShopItem } from "@/src/shared/types";
 import { Image, StyleSheet, Text, View } from "react-native";
-import { ShopItem } from "../types";
 
 const ShopCardItem = ({ item }: { item: ShopItem }) => (
   <View style={styles.item}>

@@ -3,13 +3,12 @@ import { FlatList, StyleSheet, View } from "react-native";
 import ShopCardItem from "@/src/shared/components/ShopCardItem";
 import MyTheme from "@/src/shared/theme";
 import { ShopItem } from "@/src/shared/types";
-import SearchHeader from "./components/SearchHeader";
+import SearchBar from "../components/SearchBar";
 
-import { router } from "expo-router";
-import { useHomeData } from "./hooks/useHomeData";
+import { useSearch } from "../hooks/useSearch";
 
-export default function HomeScreen() {
-  const { filteredItems } = useHomeData();
+export default function SearchScreen() {
+  const { searchQuery, setSearchQuery, filteredItems } = useSearch();
 
   const keyExtractor = (item: ShopItem) => item.id;
 
@@ -18,10 +17,6 @@ export default function HomeScreen() {
   const renderItem = ({ item }: { item: ShopItem }) => (
     <ShopCardItem item={item} />
   );
-
-  const handleSearchPress = () => {
-    router.push("/(app)/search");
-  };
 
   return (
     <FlatList
@@ -32,7 +27,9 @@ export default function HomeScreen() {
       columnWrapperStyle={styles.columnWrapper}
       keyExtractor={keyExtractor}
       ItemSeparatorComponent={itemSeparator}
-      ListHeaderComponent={<SearchHeader onPress={handleSearchPress} />}
+      ListHeaderComponent={
+        <SearchBar value={searchQuery} onChangeText={setSearchQuery} />
+      }
     />
   );
 }

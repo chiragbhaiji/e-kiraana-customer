@@ -1,6 +1,7 @@
 import AxiosMockAdapter from "axios-mock-adapter";
 
 import apiClient from "@/src/services/apiClient";
+import { mockCategories } from "./categories";
 import { mockProducts } from "./products";
 
 export const mock = new AxiosMockAdapter(apiClient, {
@@ -9,6 +10,8 @@ export const mock = new AxiosMockAdapter(apiClient, {
 
 // Mock data for products
 mock.onGet("/products").reply(200, mockProducts);
+
+mock.onGet("/categories").reply(200, mockCategories);
 
 mock.onGet(/\/search\?query=.*/).reply((config) => {
   const url = new URL(config.url!, process.env.EXPO_PUBLIC_API_URL);

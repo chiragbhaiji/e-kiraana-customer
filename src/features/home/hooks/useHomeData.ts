@@ -1,6 +1,6 @@
+import { ProductItem } from "@/src/shared/types";
 import { useEffect, useState } from "react";
 import { getProducts } from "../apis/getProducts";
-import { ShopItem } from "../types";
 
 type HomeDataProps = {
   filters: Array<string>;
@@ -16,7 +16,7 @@ const useHomeData = ({
   filters,
   sortingOption,
 }: HomeDataProps = DEFAULT_HOME_DATA_PROPS) => {
-  const [filteredItems, setFilteredItems] = useState<ShopItem[]>([]);
+  const [filteredItems, setFilteredItems] = useState<ProductItem[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {

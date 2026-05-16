@@ -1,55 +1,34 @@
-import { FlatList, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 
-import ShopCardItem from "@/src/shared/components/ShopCardItem";
-import MyTheme from "@/src/shared/theme";
-import { ShopItem } from "@/src/shared/types";
 import SearchHeader from "./components/SearchHeader";
 
 import { router } from "expo-router";
+import CategoriesSection from "./components/CategoriesSection";
+import ProductsSection from "./components/ProductsSection";
+import SortFilterSection from "./components/SortFilterSection";
+import { useCategories } from "./hooks/useCategories";
 import { useHomeData } from "./hooks/useHomeData";
 
 export default function HomeScreen() {
   const { filteredItems } = useHomeData();
-
-  const keyExtractor = (item: ShopItem) => item.id;
-
-  const itemSeparator = () => <View style={styles.separator} />;
-
-  const renderItem = ({ item }: { item: ShopItem }) => (
-    <ShopCardItem item={item} />
-  );
+  const { categories } = useCategories();
 
   const handleSearchPress = () => {
     router.push("/(app)/search");
   };
 
   return (
-    <FlatList
-      data={filteredItems}
-      numColumns={2}
-      renderItem={renderItem}
-      contentContainerStyle={styles.container}
-      columnWrapperStyle={styles.columnWrapper}
-      keyExtractor={keyExtractor}
-      ItemSeparatorComponent={itemSeparator}
-      ListHeaderComponent={<SearchHeader onPress={handleSearchPress} />}
-    />
+    <ScrollView contentContainerStyle={styles.container}>
+      <SearchHeader onPress={handleSearchPress} />
+      <CategoriesSection categories={categories} />
+      <SortFilterSection filters={[]} sortOptions={[]} />
+      <ProductsSection shops={filteredItems} />
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
-    backgroundColor: MyTheme.colors.background,
-  },
-  separator: {
-    height: 16,
-  },
-  title: {
-    color: MyTheme.colors.text,
-    fontSize: 20,
-  },
-  columnWrapper: {
-    justifyContent: "space-between",
+    gap: 16,
   },
 });

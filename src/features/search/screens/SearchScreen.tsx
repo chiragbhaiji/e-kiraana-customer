@@ -1,8 +1,8 @@
 import { FlatList, StyleSheet, View } from "react-native";
 
-import ShopCardItem from "@/src/shared/components/ShopCardItem";
+import ProductCardItem from "@/src/shared/components/ProductCardItem";
 import MyTheme from "@/src/shared/theme";
-import { ShopItem } from "@/src/shared/types";
+import { ProductItem } from "@/src/shared/types";
 import SearchBar from "../components/SearchBar";
 
 import { useSearch } from "../hooks/useSearch";
@@ -10,12 +10,12 @@ import { useSearch } from "../hooks/useSearch";
 export default function SearchScreen() {
   const { searchQuery, setSearchQuery, filteredItems } = useSearch();
 
-  const keyExtractor = (item: ShopItem) => item.id;
+  const keyExtractor = (item: ProductItem) => item.id;
 
   const itemSeparator = () => <View style={styles.separator} />;
 
-  const renderItem = ({ item }: { item: ShopItem }) => (
-    <ShopCardItem item={item} />
+  const renderItem = ({ item }: { item: ProductItem }) => (
+    <ProductCardItem item={item} />
   );
 
   return (

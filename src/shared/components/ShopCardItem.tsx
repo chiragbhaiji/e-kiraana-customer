@@ -1,20 +1,19 @@
 import { ShopItem } from "@/src/shared/types";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text } from "react-native";
+
+import Card from "@components/elements/Card";
 
 const ShopCardItem = ({ item }: { item: ShopItem }) => (
-  <View style={styles.item}>
+  <Card style={styles.item}>
     <Image id={item.id} source={{ uri: item.imageUrl }} style={styles.image} />
     <Text style={styles.title}>{item.name}</Text>
     <Text style={styles.description}>{item.description}</Text>
     <Text style={styles.price}>${item.price.toFixed(2)}</Text>
-  </View>
+  </Card>
 );
 
 const styles = StyleSheet.create({
   item: {
-    backgroundColor: "#fefefe",
-    borderRadius: 8,
-    padding: 16,
     width: "48%",
     gap: 8,
   },

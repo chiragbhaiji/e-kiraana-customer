@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { debounce } from "radash";
+import { useEffect, useMemo, useState } from "react";
 
 import { searchProducts } from "../apis/search";
 
@@ -6,18 +7,25 @@ const useSearch = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredItems, setFilteredItems] = useState([]);
 
-  useEffect(() => {
-    const fetchItems = async () => {
-      if (searchQuery) {
-        const results = await searchProducts(searchQuery);
-        setFilteredItems(results);
-      } else {
-        setFilteredItems([]);
-      }
-    };
+  const debouncedSearch = useMemo(
+    () =>
+      debounce({ delay: 300 }, (value: string) => {
+        searchProducts(value).then((data) => {
+          setFilteredItems(data);
+        });
+      }),
+    [],
+  );
 
-    fetchItems();
+  useEffect(() => {
+    debouncedSearch(searchQuery);
   }, [searchQuery]);
+
+  useEffect(() => {
+    return () => {
+      debouncedSearch.cancel();
+    };
+  }, [debouncedSearch]);
 
   return { searchQuery, setSearchQuery, filteredItems };
 };

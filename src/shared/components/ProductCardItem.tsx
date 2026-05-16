@@ -3,33 +3,37 @@ import { Image, StyleSheet, Text, View } from "react-native";
 
 import Card from "@components/elements/Card";
 
-const ProductCardItem = ({ item }: { item: ProductItem }) => (
-  <Card style={styles.item}>
+type ProductCardItemProps = {
+  item: ProductItem;
+} & React.ComponentProps<typeof Card>;
+
+const ProductCardItem = ({ item, style }: ProductCardItemProps) => (
+  <Card style={[styles.item, style]}>
+    <Image id={item.id} source={{ uri: item.imageUrl }} style={styles.image} />
     <View style={styles.body}>
-      <Image
-        id={item.id}
-        source={{ uri: item.imageUrl }}
-        style={styles.image}
-      />
-      <Text numberOfLines={2} style={styles.title}>
-        {item.name}
-      </Text>
-      <Text numberOfLines={2} style={styles.description}>
-        {item.description}
-      </Text>
+      <View style={styles.itemInfo}>
+        <Text style={styles.title} numberOfLines={2}>
+          {item.name}
+        </Text>
+        <Text numberOfLines={2} style={styles.description}>
+          {item.description}
+        </Text>
+      </View>
+      <Text style={styles.price}>${item.price.toFixed(2)}</Text>
     </View>
-    <Text style={styles.price}>${item.price.toFixed(2)}</Text>
   </Card>
 );
 
 const styles = StyleSheet.create({
   item: {
     width: 120,
-    gap: 6,
-    padding: 8,
+    padding: 0,
   },
   body: {
-    gap: 4,
+    padding: 8,
+    flex: 1,
+  },
+  itemInfo: {
     flex: 1,
   },
   title: {
@@ -41,15 +45,15 @@ const styles = StyleSheet.create({
     color: "#666",
   },
   price: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "bold",
     color: "#000",
   },
   image: {
-    width: "100%",
     aspectRatio: 1,
-    borderRadius: 8,
-    resizeMode: "contain",
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+    resizeMode: "cover",
   },
 });
 

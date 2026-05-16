@@ -22,7 +22,7 @@ export default function HomeScreen() {
       <SearchHeader onPress={handleSearchPress} />
       <CategoriesSection categories={categories} />
       <SortFilterSection filters={[]} sortOptions={[]} />
-      <ProductsSection shops={filteredItems} />
+      <ProductsSection items={filteredItems} />
     </ScrollView>
   );
 }

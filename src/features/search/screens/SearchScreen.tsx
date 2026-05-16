@@ -1,8 +1,8 @@
 import { FlatList, StyleSheet, View } from "react-native";
 
-import ProductCardItem from "@/src/shared/components/ProductCardItem";
 import MyTheme from "@/src/shared/theme";
 import { ProductItem } from "@/src/shared/types";
+import ProductCardItem from "@components/ProductCardItem";
 import SearchBar from "../components/SearchBar";
 
 import { useSearch } from "../hooks/useSearch";
@@ -15,7 +15,7 @@ export default function SearchScreen() {
   const itemSeparator = () => <View style={styles.separator} />;
 
   const renderItem = ({ item }: { item: ProductItem }) => (
-    <ProductCardItem item={item} />
+    <ProductCardItem item={item} style={styles.productCard} />
   );
 
   return (
@@ -48,5 +48,8 @@ const styles = StyleSheet.create({
   },
   columnWrapper: {
     justifyContent: "space-between",
+  },
+  productCard: {
+    width: "48%",
   },
 });
